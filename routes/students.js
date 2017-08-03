@@ -21,6 +21,19 @@ Router.get('/:id', (req, res, next) => {
     });
 });
 
+Router.get('/:id/communications', (req, res, next) => {
+  Queries.getCommunicationsByStudent(req.params.id)
+    .then(communications => {
+      if(!communications){
+        res.statusCode(404);
+        next(new Error('Communication not found.'));
+      }else{
+        res.send(communications);
+      }
+    });
+});
+
+
 Router.put('/:id', (req, res, next) => {
   let student = {
 
