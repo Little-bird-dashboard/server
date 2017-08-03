@@ -21,4 +21,14 @@ Router.get('/:id', (req, res, next) => {
     });
 });
 
+Router.put('/:id', (req, res, next) => {
+  let student = {
+    
+  }
+  Queries.updateStudentByID(req.params.id, req.body)
+    .then(student => {
+      res.send('Updated', student);
+    })
+})
+
 module.exports = Router;
