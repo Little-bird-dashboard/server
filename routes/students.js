@@ -9,4 +9,16 @@ Router.get('/', (req, res) => {
     });
 });
 
+Router.get('/:id', (req, res, next) => {
+  Queries.getOneStudentByID(req.params.id)
+    .then(student => {
+      if(!student){
+        res.statusCode(404);
+        next(new Error('Student not found.'));
+      }else{
+        res.send(student);
+      };
+    });
+});
+
 module.exports = Router;
