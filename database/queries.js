@@ -7,11 +7,14 @@ module.exports = {
   getOneStudentByID: (id) => {
     return knex('student AS s')
     .select('s.*', 'gt.name AS grade_name', 'sh.first_name AS guardian_first_name', 'sh.last_name AS guardian_last_name', 'sh.cell AS guardian_cell')
-    .innerJoin('grade_type AS gt', 'gt.id', 'grade_type_id')
-    .innerJoin('student_stakeholder AS ss','s.id','ss.student_id')
-    .innerJoin('stakeholder AS sh', 'sh.id', 'ss.stakeholder_id')
-    .innerJoin('stakeholder_type AS st','sh.stakeholder_type_id','st.id')
-    .where('st.id',2)
+    .leftJoin('grade_type AS gt', 'gt.id', 'grade_type_id')
+    .leftJoin('student_stakeholder AS ss','s.id','ss.student_id')
+    .leftJoin('stakeholder AS sh', 'sh.id', 'ss.stakeholder_id')
+    .leftJoin('stakeholder_type AS st', function () {
+      this
+        .on('sh.stakeholder_type_id','st.id')
+        .on('st.id',2);
+    })
     .where('s.id', id)
     .first();
   },
