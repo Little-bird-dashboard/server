@@ -9,6 +9,8 @@ const  Cors = require('cors');
 const app = express();
 
 const students = require('./routes/students');
+const sms = require('./routes/sms');
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -19,6 +21,7 @@ app.use(cookieParser());
 app.use(Cors());
 
 app.use('/students', students);
+app.use('/sms', sms);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
