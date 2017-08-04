@@ -33,6 +33,17 @@ Router.get('/:id/communications', (req, res, next) => {
     });
 });
 
+Router.get('/:id/stakeholders', (req, res, next) => {
+  Queries.getStakeholdersByStudentID(req.params.id)
+    .then(stakeholders => {
+      if(!stakeholders){
+        res.statusCode(404);
+        next(new Error('Stakeholders not found.'));
+      }else{
+        res.send(stakeholders);
+      }
+    });
+});
 
 Router.put('/:id', (req, res, next) => {
   let student = {
