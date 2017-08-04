@@ -18,7 +18,3 @@ console.log('started');
 //   res.writeHead(200, {'Content-Type': 'text/xml'});
 //   res.end(twiml.toString());
 // });
-
-// http.createServer(app).listen(1337, function () {
-//   console.log("Express server listening on port 1337");
-// });
