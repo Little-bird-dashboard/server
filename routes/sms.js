@@ -42,6 +42,7 @@ Router.post('/', (req, res) => {
   var twiml = new twilio.twiml.MessagingResponse();
   twiml.message('The Robots are coming! Head for the hills!');
   console.log(req.body);
+  const response = Queries.getResponse(req.body.Body);
   Queries.findStudentandStakeholder(req.body.From)
     .then(ids => {
       message= {
