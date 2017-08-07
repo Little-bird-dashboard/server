@@ -1,7 +1,7 @@
-const knex = require('./knex')
+const knex = require('./knex');
 
 module.exports = {
-  insertOneCommunication: () => {
-    return knex('student');
+  insertOneCommunication: (message) => {
+    return knex('communication').insert(message).returning('*');
   }
-}
+};
