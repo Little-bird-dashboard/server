@@ -1,7 +1,7 @@
 // Twilio Credentials
 
 //require the Twilio module and create a REST client
-var client = require('twilio')(accountSid, authToken);
+var client = require('twilio')(process.env.accountSid, process.env.authToken);
 
 client.messages.create({
     to: "+18043473241",
