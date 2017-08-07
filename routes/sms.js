@@ -12,7 +12,7 @@ Router.post('/single/:id', (req,res) => {
           from: '+18042982615',
           body: req.body.message,
       }, function(err, message) {
-          console.log(message.sid);
+          console.log(message);
           message_info= {
             communication_type_id: 1,
             raw_body: message.body,
@@ -20,7 +20,7 @@ Router.post('/single/:id', (req,res) => {
             student_id: req.params.id,
             stakeholder_id: response.guardian_id,
             MessageSid: message.sid,
-            AccountSid: message.AccountSid,
+            AccountSid: message.accountSid,
             message_status: message.status,
             communication_recipient_contact: message.to,
             communication_sender_contact: message.from
