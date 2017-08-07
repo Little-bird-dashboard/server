@@ -10,6 +10,7 @@ const app = express();
 
 const students = require('./routes/students');
 const sms = require('./routes/sms');
+const auth = require('./auth/routes')
 
 
 // uncomment after placing your favicon in /public
@@ -22,6 +23,7 @@ app.use(Cors());
 
 app.use('/students', students);
 app.use('/sms', sms);
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
