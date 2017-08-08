@@ -1,86 +1,66 @@
-const Express = require('express');
-const Router = Express.Router();
+const express = require('express');
+var app = express();
+const Router = express.Router();
 const Queries = require('../database/smsqueries');
 require('dotenv').config();
 var client = require('twilio')(process.env.accountSid, process.env.authToken);
 
 var handleResponse = require('../twilio/responseHandler.js');
 var texts = require('../twilio/texts.js');
-
+const storeMessageInfo = require('../twilio/messageInfo');
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended:false}));
 
 Router.post('/initiate/:id', (req,res) => {
+  console.log('its weird im called');
   Queries.findGuardianCellById(req.params.id)
     .then(guardian_info=>{
       texts.startingMessage(guardian_info.cell)
         .then(message=>{
-          console.log(message);
-          Queries.findStudentandStakeholder(req.body.From)
-            .then(ids => {
-              message= {
-                communication_type_id: 1,
-                raw_body: req.body.Body,
-                timestamp: Date.now(),
-                student_id: ids.student_id,
-                stakeholder_id: ids.stakeholder_id,
-                MessageSid: req.body.MessageSid,
-                AccountSid: req.body.AccountSid,
-                message_status: req.body.SmsStatus,
-                communication_recipient_contact: req.body.To,
-                communication_sender_contact: req.body.From
-              };
-              Queries.insertOneCommunication(message)
-                .then(communication=> {
-                  console.log(communication);
-                  //insert future logic
-                  //res.send(communication);
-                  res.writeHead(200, {'Content-Type': 'text/xml'});
-                  res.end(twiml.toString());
-                });
+          let message_info= {
+            communication_type_id: 1,
+            raw_body: message.body,
+            timestamp: Date.now(),
+            student_id: req.params.id,
+            stakeholder_id: guardian_info.stakeholder_id,
+            MessageSid: message.sid,
+            AccountSid: message.accountSid,
+            message_status: message.status,
+            communication_recipient_contact: req.body.to,
+            communication_sender_contact: req.body.from
+          };
+          Queries.insertOneCommunication(message_info)
+            .then(communication=> {
+              res.send(communication);
             });
-          res.send(guardian_info);
         });
     });
 });
 
 
 Router.post('/', (req, res) => {
-  var twilio = require('twilio');
-  var twiml = new twilio.twiml.MessagingResponse();
-//  twiml.message('The Robots are coming! Head for the hills!');
-console.log('hereeee');
-console.log(req.body.From);
+  //log incoming text
+  let incoming_message = req.body;
+  storeMessageInfo.storeMessageInfo_incoming(incoming_message)
+    .then(incoming_formatted => {
+      Queries.insertOneCommunication(incoming_formatted)
+        .then(response => console.log(response));
+    });
+  //responseHandler
+  //insert outgoing text
   handleResponse.getResponse(req.body.Body)(req.body.From)
-    .then(message => {
-      console.log('hir');
-      console.log(message);
-      res.send(req.body.Body)
-    }).catch((error)=>{
+    .then(outgoing_message => {
+      storeMessageInfo.storeMessageInfo_outgoing(outgoing_message)
+        .then(outgoing_formatted=>{
+          Queries.insertOneCommunication(outgoing_formatted)
+            .then(response=>console.log(response));
+        });
+      res.send('conversation success')
+    })
+    .catch((error)=>{
       console.log(error);
     });
-  // Queries.findStudentandStakeholder(req.body.From)
-  //   .then(ids => {
-  //     message= {
-  //       communication_type_id: 1,
-  //       raw_body: req.body.Body,
-  //       timestamp: Date.now(),
-  //       student_id: ids.student_id,
-  //       stakeholder_id: ids.stakeholder_id,
-  //       MessageSid: req.body.MessageSid,
-  //       AccountSid: req.body.AccountSid,
-  //       message_status: req.body.SmsStatus,
-  //       communication_recipient_contact: req.body.To,
-  //       communication_sender_contact: req.body.From
-  //     };
-  //     Queries.insertOneCommunication(message)
-  //       .then(communication=> {
-  //         console.log(communication);
-  //         //insert future logic
-  //         //res.send(communication);
-  //         res.writeHead(200, {'Content-Type': 'text/xml'});
-  //         res.end(twiml.toString());
-  //       });
-  //   });
-});
+}); //end of router
 
 
 Router.post('/confirm/:id', (req,res) => {
