@@ -4,6 +4,19 @@ const Queries = require('../database/smsqueries');
 require('dotenv').config();
 var client = require('twilio')(process.env.accountSid, process.env.authToken);
 
+var texts = require('../twilio/texts.js');
+
+Router.post('/initiate/:id', (req,res) => {
+  Queries.findGuardianCellById(req.params.id)
+    .then(response=>{
+      texts.startingMessage(response.cell)
+        .then(message=>{
+          console.log(message);
+          res.send(response);
+        });
+    });
+});
+
 Router.post('/single/:id', (req,res) => {
   Queries.findGuardianCellById(req.params.id)
     .then(response=>{
