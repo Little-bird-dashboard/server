@@ -9,29 +9,28 @@ function startingMessage(cell){
       body: `Hey it's Little Bird from Hogwarts Elementary! Your child's IEP review is coming up. What days during the week of September 4th would you be available to meet for an hour? For example, type 'Monday, Tuesday and Wednesday'`,
       to: cell,  // Text this number
       from: '+18042982615' // From a valid Twilio number
-  })
+  });
 }
 
 function timeOfDayMessage(cell){
-  client.messages.create({
+  console.log(cell);
+  return client.messages.create({
       body: `Great! Do mornings or afternoons tend to work better for you?`,
       to: cell,  // Text this number
       from: '+18042982615' // From a valid Twilio number
-  })
-  .then((message) => console.log(message.sid));
+  });
 }
 
 function preDoodleMessage(cell){
-  client.messages.create({
+  return client.messages.create({
       body: `Awesome! We will be in touch soon with potential times.`,
       to: cell,  // Text this number
       from: '+18042982615' // From a valid Twilio number
-  })
-  .then((message) => console.log(message.sid));
+  });
 }
 
-function confirmationMessage(cell){
-  client.messages.create({
+function confirmationInitiationMessage(cell){
+  return client.messages.create({
     body: `Hey it's Little Bird again! Which of these three times is best for Jane's IEP review?
     Please type one of the following numbers:
     1. Monday, September 4th at 3 PM
@@ -40,18 +39,39 @@ function confirmationMessage(cell){
     4. None of these times work for me`,
     to: cell,  // Text this numbery
     from: '+18042982615' // From a valid Twilio number
-    })
+  });
+}
+
+function confirmationMessage(cell){
+  return client.messages.create({
+    body: `Thanks for confirming! Mr. Wybrant is looking forward to seeing you.`,
+    to: cell,  // Text this numbery
+    from: '+18042982615' // From a valid Twilio number
+  });
+}
+
+function refindDate(cell){
+  return client.messages.create({
+    body: `I will look for other times and respond with a few more options soon.`,
+    to: cell,  // Text this numbery
+    from: '+18042982615' // From a valid Twilio number
+  });
+}
+
+function errorMessage(cell){
+  return client.messages.create({
+    body: `I did not understand that. Please retry or contact Mr. Wybrant at 202-999-9999`,
+    to: cell,  // Text this numbery
+    from: '+18042982615' // From a valid Twilio number
+  });
 }
 
 module.exports={
   startingMessage,
   timeOfDayMessage,
   preDoodleMessage,
-  confirmationMessage
+  confirmationInitiationMessage,
+  confirmationMessage,
+  refindDate,
+  errorMessage
 };
-//startingMessage();
-//timeOfDayMessage();
-// confirmationMessage();
-// thankYouMessage();
-
-//SM9cbf925a76c34244bab4fd8a86b2fedf
