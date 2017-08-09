@@ -36,7 +36,7 @@ function prepareOutgoingMessage(message,data){
     raw_body: message.body,
     timestamp: Date.now(),
     student_id: data.student_id,
-    stakeholder_id: data.stakeholder_id,
+    stakeholder_id: 7,
     MessageSid: message.sid,
     AccountSid: message.accountSid,
     message_status: message.status,
