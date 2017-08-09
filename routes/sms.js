@@ -21,7 +21,7 @@ Router.post('/initiate/:id', (req,res) => {
             raw_body: message.body,
             timestamp: Date.now(),
             student_id: req.params.id,
-            stakeholder_id: guardian_info.stakeholder_id,
+            stakeholder_id: 7,
             MessageSid: message.sid,
             AccountSid: message.accountSid,
             message_status: message.status,
@@ -38,7 +38,6 @@ Router.post('/initiate/:id', (req,res) => {
 
 
 Router.post('/', (req, res) => {
-  console.log('i hit heroku');
   //log incoming text
   let incoming_message = req.body;
   storeMessageInfo.storeMessageInfo_incoming(incoming_message)
@@ -77,7 +76,7 @@ Router.post('/confirm/:id', (req,res) => {
             raw_body: message.body,
             timestamp: Date.now(),
             student_id: req.params.id,
-            stakeholder_id: guardian_info.stakeholder_id,
+            stakeholder_id: 7,
             MessageSid: message.sid,
             AccountSid: message.accountSid,
             message_status: message.status,
@@ -113,7 +112,7 @@ Router.post('/single/:id', (req,res) => {
             raw_body: message.body,
             timestamp: Date.now(),
             student_id: req.params.id,
-            stakeholder_id: response.stakeholder_id,
+            stakeholder_id: 1,
             MessageSid: message.sid,
             AccountSid: message.accountSid,
             message_status: message.status,
