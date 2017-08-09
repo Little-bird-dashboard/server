@@ -5,33 +5,22 @@ function getResponse(message, ids){
   const {stakeholder_id, student_id} = ids;
   let availability = [];
   let days = [];
-  let morning_availability = {
-    stakeholder_id: stakeholder_id,
-    date: '',
-    timeframe: 'morning'
-  };
-  console.log(morning_availability);
-  let afternoon_availability = {
-    stakeholder_id: stakeholder_id,
-    date: '',
-    timeframe: 'afternoon'
-  };
   if(message.toLowerCase().includes('monday') || message.toLowerCase().includes('tuesday') || message.toLowerCase().includes('wednesday') || message.toLowerCase().includes('thursday') || message.toLowerCase().includes('friday')) {
     //continue on to update array of blackout dates
     if (message.toLowerCase().includes('monday')) {
-      days.push('monday')
+      days.push('Monday')
     }
     if (message.toLowerCase().includes('tuesday')) {
-      days.push('tuesday')
+      days.push('Tuesday')
     }
     if (message.toLowerCase().includes('wednesday')) {
-      days.push('wednesday')
+      days.push('Wednesday')
     }
     if (message.toLowerCase().includes('thursday')) {
-      days.push('thursday')
+      days.push('Thursday')
     }
     if (message.toLowerCase().includes('friday')) {
-      days.push('friday')
+      days.push('Friday')
     }
     for (var i = 0; i < days.length; i++) {
       availability.push({
@@ -39,23 +28,16 @@ function getResponse(message, ids){
         date: days[i],
         timeframe: 'morning'
       });
-      availability.push({
-        stakeholder_id: stakeholder_id,
-        date: days[i],
-        timeframe: 'afternoon'
-      });
+      // availability.push({
+      //   stakeholder_id: stakeholder_id,
+      //   date: days[i],
+      //   timeframe: 'afternoon'
+      // });
     }
     availability.forEach(period=>{
-      console.log('here');
-      Queries.insertOneDayPeriod(period);
-    })
-
-    // const unique_days = [...new Set(availability.map(item => item.date))];
-    // const unique_days = [...new Set(availability.map(item => item.date))];
-    // console.log(unique_days);
-    // new_days = `'${unique_days.join("', '")}'`;
-    // console.log(new_days);
-    //if response looks like day, ask for time of day
+      Queries.insertOneDayPeriod(period)
+        .then(message=>console.log(message));
+    });
     return texts.timeOfDayMessage;
   }else if(message.toLowerCase().includes('morning') || message.toLowerCase().includes('afternoon') || message.toLowerCase().includes('either') || message.toLowerCase().includes('both')){
     if (message.toLowerCase().includes('morning')) {
