@@ -40,6 +40,7 @@ Router.post('/add', (req,res,next) => {
         email: 'demo.guardian@gmail.com',
         cell: req.body.cell
       };
+      console.log(gaurdian_info);
       Queries.insertOneGuardian(guardian_info)
         .then(guardian=>{
           console.log(guardian);
