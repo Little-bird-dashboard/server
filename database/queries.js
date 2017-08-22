@@ -2,7 +2,10 @@ const knex = require('./knex');
 
 module.exports = {
   getAllStudents: () => {
-    return knex('student');
+    return knex('student')
+    .select(knex.raw('student.*, max(timestamp)'))
+    .leftJoin('communication as comm', 'comm.student_id', 'student.id' )
+    .groupBy('student.id');
   },
   getOneStudentByID: (id) => {
     return knex('student AS s')
