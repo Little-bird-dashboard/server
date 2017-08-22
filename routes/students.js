@@ -21,6 +21,48 @@ Router.get('/:id', (req, res, next) => {
     });
 });
 
+Router.post('/add', (req,res,next) => {
+  student_info = {
+    student_id:'xxxxxx',
+    first_name:'Demo',
+    last_name: 'Student',
+    grade_type_id:3,
+    IEP_deadline: '2017-11-01 05:00:00',
+    profile_img: './static/demo-icon.jpg'
+  };
+  Queries.insertOneStudent(student_info)
+    .then(student => {
+      console.log(student);
+      guardian_info = {
+        stakeholder_type_id:2,
+        first_name: 'Demo',
+        last_name: 'Guardian',
+        email: 'demo.guardian@gmail.com',
+        cell: req.body.cell
+      };
+      Queries.insertOneGuardian(guardian_info)
+        .then(guardian=>{
+          console.log(guardian);
+          relation = {
+            student_id: student.id,
+            stakeholder_id: gaurdian.id,
+            is_required: false,
+            importance: 9
+          };
+          Queries.insertOneRelation(relation)
+            .then(response=>{
+              console.log(response);
+              if(!response){
+                res.statusCode(404);
+                next(new Error('Could not add student'));
+              }else{
+                res.send(response);
+              }
+            });
+        });
+    });
+
+});
 Router.get('/:id/communications', (req, res, next) => {
   Queries.getCommunicationsByStudent(req.params.id)
     .then(communications => {

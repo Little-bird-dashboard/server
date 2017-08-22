@@ -30,5 +30,14 @@ module.exports = {
   },
   updateStudentByID: (id, student) => {
     return knex('student').where('id', id).update(student).returning('*');
+  },
+  insertOneStudent: (student) => {
+    return knex('student').insert(student).returning('*');
+  },
+  insertOneGuardian: (guardian) => {
+    return knex('stakeholder').insert(guardian).returning('*');
+  },
+  insertOneRelation: (relation) => {
+    return knex('student_stakeholder').insert(relation).returning('*');
   }
 };
