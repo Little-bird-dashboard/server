@@ -49,6 +49,7 @@ Router.post('/add', (req,res,next) => {
             is_required: false,
             importance: 9
           };
+          console.log(relation);
           Queries.insertOneRelation(relation)
             .then(response=>{
               console.log(response);
