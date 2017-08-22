@@ -3,7 +3,7 @@ const knex = require('./knex');
 module.exports = {
   getAllStudents: () => {
     return knex('student')
-    .select(knex.raw('student.*, max(timestamp)'))
+    .select(knex.raw('student.*, max(timestamp) as last_communication'))
     .leftJoin('communication as comm', 'comm.student_id', 'student.id' )
     .groupBy('student.id');
   },
