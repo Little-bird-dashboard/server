@@ -93,13 +93,15 @@ Router.post('/single/:id', (req,res) => {
             raw_body: message.body,
             timestamp: Date.now(),
             student_id: req.params.id,
-            stakeholder_id: response.guardian_id,
+            stakeholder_id: response.stakeholder_id,
             MessageSid: message.sid,
             AccountSid: message.accountSid,
             message_status: message.status,
             communication_recipient_contact: message.to,
             communication_sender_contact: message.from
           };
+          console.log(message_info);
+          console.log('here');
           //insert into communications table
           Queries.insertOneCommunication(message_info)
             .then(communication => {
