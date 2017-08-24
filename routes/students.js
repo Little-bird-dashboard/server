@@ -55,7 +55,7 @@ Router.put('/:id', (req, res, next) => {
       console.log(stakeholder.stakeholder_id, req.body.cell);
       smsQueries.updateGuardianCell(stakeholder.stakeholder_id, req.body.cell)
         .then(guardian =>{
-          console.log(gaurdian);
+          console.log(guardian);
           res.send({guardian});
         })
         .catch((err)=>{
