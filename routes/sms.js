@@ -12,7 +12,6 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:false}));
 
 Router.post('/initiate/:id', (req,res) => {
-  console.log('its weird im called');
   Queries.findGuardianCellById(req.params.id)
     .then(guardian_info=>{
       texts.startingMessage(guardian_info.cell)
@@ -100,8 +99,6 @@ Router.post('/single/:id', (req,res) => {
             communication_recipient_contact: message.to,
             communication_sender_contact: message.from
           };
-          console.log(message_info);
-          console.log('here');
           //insert into communications table
           Queries.insertOneCommunication(message_info)
             .then(communication => {
