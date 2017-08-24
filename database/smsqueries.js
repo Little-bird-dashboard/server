@@ -22,6 +22,7 @@ module.exports = {
   updateGuardianCell: (stakeholder_id, cell) => {
     return knex('stakeholder')
     .where('id',stakeholder_id)
-    .update('cell', cell);
+    .update('cell', cell)
+    .returning('*');
   }
 };
