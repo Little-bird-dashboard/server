@@ -20,8 +20,8 @@ module.exports = {
     .first();
   },
   updateGuardianCell: (stakeholder_id, cell) => {
-    return knex('stakeholder AS s')
+    return knex('stakeholder')
     .where('id',stakeholder_id)
-    .update('s.cell', cell);
+    .update('cell', cell);
   }
 };
