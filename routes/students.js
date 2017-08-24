@@ -48,6 +48,7 @@ Router.get('/:id/stakeholders', (req, res, next) => {
 });
 
 Router.put('/:id', (req, res, next) => {
+  console.log('entered route');
   smsQueries.findGuardianCellById(req.params.id)
     .then(stakeholder => {
       console.log('here');
@@ -55,6 +56,9 @@ Router.put('/:id', (req, res, next) => {
       smsQueries.updateGuardianCell(stakeholder.stakeholder_id, req.body.cell)
         .then(guardian =>{
           res.send(guardian);
+        })
+        .catch((err)=>{
+          console.log(err);
         });
     });
 });
