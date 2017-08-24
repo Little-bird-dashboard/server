@@ -18,5 +18,10 @@ module.exports = {
     .where('a.student_id', studentID)
     .andWhere('b.stakeholder_type_id', 2)
     .first();
+  },
+  updateGuardianCell: (stakeholder_id, cell) => {
+    return knex('stakeholder AS s')
+    .where('id',stakeholder_id)
+    .update('s.cell', cell);
   }
 };
