@@ -42,6 +42,7 @@ Router.post('/', (req, res) => {
   let incoming_message = req.body;
   storeMessageInfo.storeMessageInfo_incoming(incoming_message)
     .then(incoming_formatted => {
+      console.log(incoming_formatted);
       Queries.insertOneCommunication(incoming_formatted)
         .then(response => console.log(response));
     });
