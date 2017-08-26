@@ -81,6 +81,7 @@ Router.post('/single/:id', (req,res) => {
   //get guardian cell and id based on student id
   Queries.findGuardianCellById(req.params.id)
     .then(response=>{
+      console.log(response);
       //send intro message to parent
       client.messages.create({
           to: response.cell,
@@ -100,7 +101,6 @@ Router.post('/single/:id', (req,res) => {
             communication_recipient_contact: message.to,
             communication_sender_contact: message.from
           };
-          console.log(message_info);
           //insert into communications table
           Queries.insertOneCommunication(message_info)
             .then(communication => {
