@@ -27,8 +27,8 @@ Router.post('/initiate/:id', (req,res) => {
             MessageSid: message.sid,
             AccountSid: message.accountSid,
             message_status: message.status,
-            communication_recipient_contact: req.body.to,
-            communication_sender_contact: req.body.from
+            communication_recipient_contact: message.to,
+            communication_sender_contact: message.from
           };
           console.log(message_info);
           Queries.insertOneCommunication(message_info)
