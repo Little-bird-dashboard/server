@@ -81,6 +81,7 @@ Router.post('/single/:id', (req,res) => {
   //get guardian cell and id based on student id
   Queries.findGuardianCellById(req.params.id)
     .then(response=>{
+      console.log(response);
       //send intro message to parent
       client.messages.create({
           to: response.cell,
@@ -93,7 +94,7 @@ Router.post('/single/:id', (req,res) => {
             raw_body: message.body,
             timestamp: Date.now(),
             student_id: req.params.id,
-            stakeholder_id: response.stakeholder_id,
+            stakeholder_id: 1,
             MessageSid: message.sid,
             AccountSid: message.accountSid,
             message_status: message.status,
