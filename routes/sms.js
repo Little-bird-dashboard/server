@@ -12,6 +12,8 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:false}));
 
 Router.post('/initiate/:id', (req,res) => {
+  console.log(req.body);
+  console.log(req.params);
   Queries.findGuardianCellById(req.params.id)
     .then(guardian_info=>{
       texts.startingMessage(guardian_info.cell)
