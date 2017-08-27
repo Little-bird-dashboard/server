@@ -28,6 +28,7 @@ Router.post('/initiate/:id', (req,res) => {
             communication_recipient_contact: req.body.to,
             communication_sender_contact: req.body.from
           };
+          console.log(message_info);
           Queries.insertOneCommunication(message_info)
             .then(communication=> {
               res.send(communication);
@@ -55,7 +56,7 @@ Router.post('/', (req, res) => {
           Queries.insertOneCommunication(outgoing_formatted)
             .then(response=>console.log(response));
         });
-      res.send('conversation success')
+      res.send('conversation success');
     })
     .catch((error)=>{
       console.log(error);
@@ -81,7 +82,6 @@ Router.post('/single/:id', (req,res) => {
   //get guardian cell and id based on student id
   Queries.findGuardianCellById(req.params.id)
     .then(response=>{
-      console.log(response);
       //send intro message to parent
       client.messages.create({
           to: response.cell,
