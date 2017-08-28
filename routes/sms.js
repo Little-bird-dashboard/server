@@ -17,16 +17,16 @@ Router.post('/initiate/:id', (req,res) => {
       texts.startingMessage(guardian_info.cell)
         .then(message=>{
           let message_info= {
-            communication_type_id: 1,
+            communication_type_id: 4,
             raw_body: message.body,
             timestamp: Date.now(),
             student_id: req.params.id,
-            stakeholder_id: guardian_info.stakeholder_id,
+            stakeholder_id: 7,
             MessageSid: message.sid,
             AccountSid: message.accountSid,
             message_status: message.status,
-            communication_recipient_contact: req.body.to,
-            communication_sender_contact: req.body.from
+            communication_recipient_contact: message.to,
+            communication_sender_contact: message.from
           };
           Queries.insertOneCommunication(message_info)
             .then(communication=> {
@@ -38,42 +38,56 @@ Router.post('/initiate/:id', (req,res) => {
 
 
 Router.post('/', (req, res) => {
-  //log incoming text
   let incoming_message = req.body;
   storeMessageInfo.storeMessageInfo_incoming(incoming_message)
     .then(incoming_formatted => {
-      console.log(incoming_formatted);
       Queries.insertOneCommunication(incoming_formatted)
         .then(response => console.log(response));
     });
   //responseHandler
   //insert outgoing text
-  handleResponse.getResponse(req.body.Body)(req.body.From)
-    .then(outgoing_message => {
-      storeMessageInfo.storeMessageInfo_outgoing(outgoing_message)
-        .then(outgoing_formatted=>{
-          Queries.insertOneCommunication(outgoing_formatted)
-            .then(response=>console.log(response));
+  Queries.findStudentandStakeholder(req.body.From)
+    .then(ids=>{
+      handleResponse.getResponse(req.body.Body, ids)(req.body.From)
+        .then(outgoing_message => {
+          storeMessageInfo.storeMessageInfo_outgoing(outgoing_message)
+            .then(outgoing_formatted=>{
+              Queries.insertOneCommunication(outgoing_formatted)
+                .then(response=>console.log(response));
+            });
+          res.send('conversation success');
+        })
+        .catch((error)=>{
+          console.log(error);
         });
-      res.send('conversation success')
-    })
-    .catch((error)=>{
-      console.log(error);
     });
 }); //end of router
 
 
 Router.post('/confirm/:id', (req,res) => {
   Queries.findGuardianCellById(req.params.id)
-    .then(response=>{
-      texts.confirmationInitiationMessage(response.cell)
+    .then(guardian_info=>{
+      texts.confirmationInitiationMessage(guardian_info.cell)
         .then(message=>{
-          console.log(message);
-          res.send(response);
+          let message_info= {
+            communication_type_id: 1,
+            raw_body: message.body,
+            timestamp: Date.now(),
+            student_id: req.params.id,
+            stakeholder_id: 7,
+            MessageSid: message.sid,
+            AccountSid: message.accountSid,
+            message_status: message.status,
+            communication_recipient_contact: message.to,
+            communication_sender_contact: message.from
+          };
+          Queries.insertOneCommunication(message_info)
+            .then(communication=> {
+              res.send(communication);
+            });
         });
     });
 });
-
 
 //route called in the 'initiate conversation button' on student page
 //sends welcome message for IEP scheduler
@@ -81,7 +95,6 @@ Router.post('/single/:id', (req,res) => {
   //get guardian cell and id based on student id
   Queries.findGuardianCellById(req.params.id)
     .then(response=>{
-      console.log(response);
       //send intro message to parent
       client.messages.create({
           to: response.cell,

@@ -13,7 +13,6 @@ function startingMessage(cell){
 }
 
 function timeOfDayMessage(cell){
-  console.log(cell);
   return client.messages.create({
       body: `Great! Do mornings or afternoons tend to work better for you?`,
       to: cell,  // Text this number
