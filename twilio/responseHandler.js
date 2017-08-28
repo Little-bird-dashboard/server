@@ -2,18 +2,11 @@ var texts = require('../twilio/texts.js');
 var Queries = require('../database/schedulequeries');
 
 function getResponse(message, ids){
-  console.log(message);
-  console.log(ids);
   const {stakeholder_id, student_id} = ids;
-    console.log('should be getting response');
   let availability = [];
   let days = [];
-  console.log('checking out message');
-  console.log(message.toLowerCase());
-  console.log(message.toLowerCase().includes('monday'));
   if(message.toLowerCase().includes('monday') || message.toLowerCase().includes('tuesday') || message.toLowerCase().includes('wednesday') || message.toLowerCase().includes('thursday') || message.toLowerCase().includes('friday')) {
     //continue on to update array of blackout dates
-    console.log('hereee');
     if (message.toLowerCase().includes('monday')) {
       days.push('Monday')
     }
@@ -42,11 +35,9 @@ function getResponse(message, ids){
       // });
     }
     availability.forEach(period=>{
-      console.log('hi');
       Queries.insertOneDayPeriod(period)
         .then(message=>console.log(message));
     });
-    console.log('here');
     return texts.timeOfDayMessage;
   }else if(message.toLowerCase().includes('morning') || message.toLowerCase().includes('afternoon') || message.toLowerCase().includes('either') || message.toLowerCase().includes('both')){
     if (message.toLowerCase().includes('morning')) {
