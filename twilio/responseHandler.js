@@ -7,6 +7,7 @@ function getResponse(message, ids){
   const {stakeholder_id, student_id} = ids;
   let availability = [];
   let days = [];
+  debugger
   if(message.toLowerCase().includes('monday') || message.toLowerCase().includes('tuesday') || message.toLowerCase().includes('wednesday') || message.toLowerCase().includes('thursday') || message.toLowerCase().includes('friday')) {
     //continue on to update array of blackout dates
     console.log('hereee');
