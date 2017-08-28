@@ -2,6 +2,7 @@ var texts = require('../twilio/texts.js');
 var Queries = require('../database/schedulequeries');
 
 function getResponse(message, ids){
+  console.log(message);
   console.log('should be getting response');
   const {stakeholder_id, student_id} = ids;
   let availability = [];
