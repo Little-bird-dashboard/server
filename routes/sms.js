@@ -38,6 +38,7 @@ Router.post('/initiate/:id', (req,res) => {
 
 
 Router.post('/', (req, res) => {
+  console.log(req.body);
   //log incoming text
   let incoming_message = req.body;
   storeMessageInfo.storeMessageInfo_incoming(incoming_message)
