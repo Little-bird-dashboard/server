@@ -8,6 +8,7 @@ function getResponse(message, ids){
   let days = [];
   if(message.toLowerCase().includes('monday') || message.toLowerCase().includes('tuesday') || message.toLowerCase().includes('wednesday') || message.toLowerCase().includes('thursday') || message.toLowerCase().includes('friday')) {
     //continue on to update array of blackout dates
+    console.log('hereee');
     if (message.toLowerCase().includes('monday')) {
       days.push('Monday')
     }
@@ -36,6 +37,7 @@ function getResponse(message, ids){
       // });
     }
     availability.forEach(period=>{
+      console.log('hi');
       Queries.insertOneDayPeriod(period)
         .then(message=>console.log(message));
     });
