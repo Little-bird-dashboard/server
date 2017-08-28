@@ -3,8 +3,9 @@ var Queries = require('../database/schedulequeries');
 
 function getResponse(message, ids){
   console.log(message);
-  console.log('should be getting response');
+  console.log(ids);
   const {stakeholder_id, student_id} = ids;
+    console.log('should be getting response');
   let availability = [];
   let days = [];
   console.log('checking out message');
