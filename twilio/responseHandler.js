@@ -2,6 +2,7 @@ var texts = require('../twilio/texts.js');
 var Queries = require('../database/schedulequeries');
 
 function getResponse(message, ids){
+  console.log('should be getting response');
   const {stakeholder_id, student_id} = ids;
   let availability = [];
   let days = [];
@@ -38,6 +39,7 @@ function getResponse(message, ids){
       Queries.insertOneDayPeriod(period)
         .then(message=>console.log(message));
     });
+    console.log('here');
     return texts.timeOfDayMessage;
   }else if(message.toLowerCase().includes('morning') || message.toLowerCase().includes('afternoon') || message.toLowerCase().includes('either') || message.toLowerCase().includes('both')){
     if (message.toLowerCase().includes('morning')) {
