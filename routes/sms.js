@@ -48,7 +48,7 @@ Router.post('/', (req, res) => {
   //insert outgoing text
   Queries.findStudentandStakeholder(req.body.From)
     .then(ids=>{
-      handleResponse.getResponse(req.body.Body)(req.body.From)
+      handleResponse.getResponse(req.body.Body, ids)(req.body.From)
         .then(outgoing_message => {
           storeMessageInfo.storeMessageInfo_outgoing(outgoing_message)
             .then(outgoing_formatted=>{
