@@ -12,25 +12,22 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:false}));
 
 Router.post('/initiate/:id', (req,res) => {
-  console.log(req.body);
-  console.log(req.params);
   Queries.findGuardianCellById(req.params.id)
     .then(guardian_info=>{
       texts.startingMessage(guardian_info.cell)
         .then(message=>{
           let message_info= {
-            communication_type_id: 1,
+            communication_type_id: 4,
             raw_body: message.body,
             timestamp: Date.now(),
             student_id: req.params.id,
-            stakeholder_id: guardian_info.stakeholder_id,
+            stakeholder_id: 7,
             MessageSid: message.sid,
             AccountSid: message.accountSid,
             message_status: message.status,
             communication_recipient_contact: message.to,
             communication_sender_contact: message.from
           };
-          console.log(message_info);
           Queries.insertOneCommunication(message_info)
             .then(communication=> {
               res.send(communication);
@@ -45,7 +42,6 @@ Router.post('/', (req, res) => {
   let incoming_message = req.body;
   storeMessageInfo.storeMessageInfo_incoming(incoming_message)
     .then(incoming_formatted => {
-      console.log(incoming_formatted);
       Queries.insertOneCommunication(incoming_formatted)
         .then(response => console.log(response));
     });

@@ -32,7 +32,7 @@ function storeMessageInfo_outgoing(message) {
 
 function prepareOutgoingMessage(message,data){
   let message_info= {
-    communication_type_id: 1,
+    communication_type_id: 4,
     raw_body: message.body,
     timestamp: Date.now(),
     student_id: data.student_id,
