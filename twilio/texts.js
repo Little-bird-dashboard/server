@@ -32,7 +32,7 @@ function confirmationInitiationMessage(cell){
   return client.messages.create({
     body: `Hey it's Little Bird again! Which of these three times is best for Jane's IEP review?
     Please type one of the following numbers:
-    1. Monday, September 4th at 3 PM
+    1. Monday, September 4th at 9 AM
     2. Tuesday, September 5th at 8 AM
     3. Tuesday, September 5th at 11 AM
     4. None of these times work for me`,
