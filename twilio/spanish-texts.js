@@ -6,7 +6,11 @@ var client = require('twilio')(process.env.accountSid, process.env.authToken);
 
 function startingMessage(cell){
   return client.messages.create({
-      body: `Hey it's Little Bird from Hogwarts Elementary! Your child's IEP review is coming up. What days during the week of September 4th would you be available to meet for an hour? For example, type 'Monday, Tuesday and Wednesday'`,
+      body: `Hola es 'Little Bird' de Roots Elementary! Ya toca la revisión del
+IEP (Programa educativo individualizado) de su estudiante. Que dias
+durante la semana del 4 de Septiembre está usted disponible para
+una junta de una hora? Por ejemplo, responda, 'Lunes, Martes y
+Miércoles.'`,
       to: cell,  // Text this number
       from: '+18042982615' // From a valid Twilio number
   });
@@ -14,7 +18,8 @@ function startingMessage(cell){
 
 function timeOfDayMessage(cell){
   return client.messages.create({
-      body: `Great! Do mornings or afternoons tend to work better for you?`,
+      body: `Genial! Que horario es mejor para usted? En la mañana o la
+tarde?`,
       to: cell,  // Text this number
       from: '+18042982615' // From a valid Twilio number
   });
@@ -22,7 +27,8 @@ function timeOfDayMessage(cell){
 
 function preDoodleMessage(cell){
   return client.messages.create({
-      body: `Awesome! We will be in touch soon with potential times.`,
+      body: `Que bueno! En seguida le mandaremos horarios
+potenciales.`,
       to: cell,  // Text this number
       from: '+18042982615' // From a valid Twilio number
   });
@@ -30,8 +36,9 @@ function preDoodleMessage(cell){
 
 function confirmationInitiationMessage(cell){
   return client.messages.create({
-    body: `Hey it's Little Bird again! Which of these three times is best for Jane's IEP review?
-    Please type one of the following numbers:
+    body: `Hola es 'Little Bird' nuevamente! Cual de estos tres horarios es
+mejor para la revisión del IEP de Jane?
+    Por favor responda con uno de los siguiente numeros:
     1. Monday, September 4th at 9 AM
     2. Tuesday, September 5th at 8 AM
     3. Tuesday, September 5th at 11 AM
@@ -43,7 +50,7 @@ function confirmationInitiationMessage(cell){
 
 function confirmationMessage(cell){
   return client.messages.create({
-    body: `Thanks for confirming! Ms. Moore is looking forward to seeing you.`,
+    body: `Gracias por confirmar! Ms. Moore está lista para la junta.`,
     to: cell,  // Text this numbery
     from: '+18042982615' // From a valid Twilio number
   });
@@ -51,7 +58,7 @@ function confirmationMessage(cell){
 
 function refindDate(cell){
   return client.messages.create({
-    body: `I will look for other times and respond with a few more options soon.`,
+    body: `Está bien. Yo buscaré otros horarios y le mandaré las opciones en seguida.`,
     to: cell,  // Text this numbery
     from: '+18042982615' // From a valid Twilio number
   });
@@ -59,7 +66,8 @@ function refindDate(cell){
 
 function errorMessage(cell){
   return client.messages.create({
-    body: `I did not understand that. Please retry or contact Mrs. Moore at 202-999-9999`,
+    body: `Disculpe, no entendí lo que me quizo decir. Por favor intente
+nuevamente o contacte a Mrs. Moore al 202-999-9999`,
     to: cell,  // Text this numbery
     from: '+18042982615' // From a valid Twilio number
   });

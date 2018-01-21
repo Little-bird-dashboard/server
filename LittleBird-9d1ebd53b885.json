@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "littlebird-584b3",
+  "private_key_id": "9d1ebd53b8851a1f12595aafa9b69cc27d288107",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCjKp2eqYCyhlNF\nlgwIjKJs6w6MsMmyJoChLvS0RkggGKu0DR87K9uSauca+iRcZDwjz+CtqjMnpL/0\nu0d6wOZgB1FuADy6UnPjsWzebYCbFMtEGpJIoexpb3mh8zhFySK2I4pdomKxMy5h\n0dA1Fed236G7V1pI2I7vv+GUjaVJdD+EcghqLJtjy9ORTRShRt3B2UxlrlwTv2tN\ntnYSWee33pFLmQ58eTMwxiMsef0OnmqllfGjHhjFFPYlDK+dYIR4kVXDiHUPEV0v\nOK8K2anop6GZ7WW0+3JyfYS9FLN4mDOlQY2oxTV7o6CxbBaWE62epTn774Ztd2qt\ncDpxh59jAgMBAAECggEAQwwV7MaWHcXYnfWESFcRv1PvjJxwpQXxQUp8Pz/KD3ZT\nyA7EUJo7BbVr9cfn/RcrJ0QafQI9NwMZ5cS3IJf3kmovadYrHh0Xhe64X8X7XL50\nsC2DAtmWvdSS1JuO+g4md1WvW76Ic2wmmQeQWOABVvWaDdNdRCXIxnfAiDyUONQl\nB/BPgCRg6iR68N8LsdX5U7qmy5di8kzXa7es1/6A/cywTi+HzbJFFZuJv7T9wrx6\nRwTPAmQhtJ2AE6ALK+Oaq+OTUE8RDbjddU/HRhZ2l0lzdGVE3atKnk8LEm6k5SWu\nMJytk+Kf+4E6EXwsAnpZ1c5BxDnAKHYhLq9FIqgIcQKBgQDjDuQ2ZBbbM5WzUoGv\nxo6dw47OGkLE1UGnVdkoKkH1pcd3PT2sng/rZsZMlDTRszxqi2n9zfqB3pS/Svi+\n8fiV9q4cVkGMOSVdbe3qn+8VYdSdJdRJQGQ+0nB9P/X+8XzUUjf42swg9wnFbrzM\nG6P2EEJltFFe9chy4PGt30sXNQKBgQC39uGwVGqmQCsgZ09LrHwt4KHPx2DhvLJW\nR/2erH8PBgBhkmYMW+kSyLg5p+QnpvRKQTtGrTPTMz3pdhdfrshk/x50f8DXVjyB\nNTKxMpEGqNsXLpn21xxSnnUDXjpMYXAsXmYEXPZTGuZ/uo4BWdiRDg1uJC78Yjwj\nKHPKNax3NwKBgBWq4CBIoN2+KHT6VKHfgtCPTttgKir6Zs9/I7/veGfmsAgy8eW9\nF6vRHO9F3Vx9jDBmqXCs7VDjWrJ+hwpBsQUuiyLtIEgvU998lA2lwXz63v04FPAA\nkxBjqJRrPCBeDxl71xeKWZxztpz+mkmoAZeDqbJm6LT1I3HDAY0kF9hZAoGAci3E\n/hAm8XC6U65LRQiVOlRFmhSBSRo5BdxAyY7+fXCYI/cdZ2ZUTthNn1tY/FNfJAdA\npykxFVCkiJZHA5gTwLunR19TbVOU0g0WnWxpHt0GvmiqHs58QbsfnSuKu4VufdtJ\nLkQUjpgPoA9FvAjrpXw3UbkbgIHoGVouI78UgBkCgYEAkAiF8uowaY3sd2Epm1eN\niaQdnHo8eX09QEG21oJIWUr7GMi4wRYuzgNTkGFO+n4eMApwBrecmPHinrZtlRMf\n+n15DlNirjGN4gLN3XdNRA9u+nDqf6AqTggiPrip/FB5253OyZKdoU0EtD51hoqv\njBeYqeZF6LjW+46FrIGk6so=\n-----END PRIVATE KEY-----\n",
+  "client_email": "little-bird-service-account@littlebird-584b3.iam.gserviceaccount.com",
+  "client_id": "108985593935178095423",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/little-bird-service-account%40littlebird-584b3.iam.gserviceaccount.com"
+}
