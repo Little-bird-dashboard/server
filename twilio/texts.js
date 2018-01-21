@@ -4,15 +4,15 @@ require('dotenv').config({path: '../.env'});
 var client = require('twilio')(process.env.accountSid, process.env.authToken);
 
 
-function startingMessage(cell){
+function startingMessage(cell, deadline, school_name){
   return client.messages.create({
-      body: `Hey it's Little Bird from Hogwarts Elementary! Your child's IEP review is coming up. What days during the week of September 4th would you be available to meet for an hour? For example, type 'Monday, Tuesday and Wednesday'`,
+      body: `Hey it's Little Bird from ${school_name}! Your child's IEP review is coming up. What days during the week of ${deadline} would you be available to meet for an hour? For example, type 'Monday, Tuesday and Wednesday'`,
       to: cell,  // Text this number
       from: '+18042982615' // From a valid Twilio number
   });
 }
 
-function timeOfDayMessage(cell){
+function timeOfDayMessage(cell, sped_info){
   return client.messages.create({
       body: `Great! Do mornings or afternoons tend to work better for you?`,
       to: cell,  // Text this number
@@ -20,7 +20,7 @@ function timeOfDayMessage(cell){
   });
 }
 
-function preDoodleMessage(cell){
+function preDoodleMessage(cell, sped_info){
   return client.messages.create({
       body: `Awesome! We will be in touch soon with potential times.`,
       to: cell,  // Text this number
@@ -30,7 +30,7 @@ function preDoodleMessage(cell){
 
 function confirmationInitiationMessage(cell){
   return client.messages.create({
-    body: `Hey it's Little Bird again! Which of these three times is best for Jane's IEP review?
+    body: `Hey it's Little Bird again! Which of these three times is best for your child's IEP review?
     Please type one of the following numbers:
     1. Monday, September 4th at 9 AM
     2. Tuesday, September 5th at 8 AM
@@ -41,15 +41,15 @@ function confirmationInitiationMessage(cell){
   });
 }
 
-function confirmationMessage(cell){
+function confirmationMessage(cell, sped_info){
   return client.messages.create({
-    body: `Thanks for confirming! Ms. Moore is looking forward to seeing you.`,
+    body: `Thanks for confirming! ${sped_info.first_name} ${sped_info.last_name} is looking forward to seeing you.`,
     to: cell,  // Text this numbery
     from: '+18042982615' // From a valid Twilio number
   });
 }
 
-function refindDate(cell){
+function refindDate(cell, sped_info){
   return client.messages.create({
     body: `I will look for other times and respond with a few more options soon.`,
     to: cell,  // Text this numbery
@@ -57,9 +57,9 @@ function refindDate(cell){
   });
 }
 
-function errorMessage(cell){
+function errorMessage(cell, sped_info){
   return client.messages.create({
-    body: `I did not understand that. Please retry or contact Mrs. Moore at 202-999-9999`,
+    body: `I did not understand that. Please retry or contact ${sped_info.first_name} ${sped_info.last_name} at ${sped_info.cell}`,
     to: cell,  // Text this numbery
     from: '+18042982615' // From a valid Twilio number
   });

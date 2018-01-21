@@ -18,12 +18,22 @@ module.exports = {
   },
   findGuardianCellById: (studentID) => {
     return knex('student_stakeholder AS a')
-    .select('b.cell', 'b.id AS stakeholder_id', 'c.language_id', 'd.name AS language_name', 'd.google_id')
+    .select('b.cell', 'b.id AS stakeholder_id', 'c.language_id', 'd.name AS language_name', 'd.google_id', 'c.IEP_deadline', 's.name AS school_name')
     .innerJoin('stakeholder AS b', 'a.stakeholder_id', 'b.id')
     .innerJoin('student as c', 'c.id', 'a.student_id')
+    .innerJoin('school as s', 'c.school_id', 's.id')
     .leftJoin('language as d', 'd.id', 'c.language_id')
     .where('a.student_id', studentID)
     .andWhere('b.stakeholder_type_id', 2)
+    .first();
+  },
+  getSpedInfoByStudentID: (id) => {
+    return knex('student_stakeholder AS ss')
+    .select('sh.*')
+    .leftJoin('stakeholder AS sh','sh.id', 'ss.stakeholder_id')
+    .leftJoin('stakeholder_type AS st', 'sh.stakeholder_type_id','st.id')
+    .where('ss.student_id', id)
+    .andWhere('sh.stakeholder_type_id', 1)
     .first();
   },
   updateGuardianCell: (stakeholder_id, cell) => {

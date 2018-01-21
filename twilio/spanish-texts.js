@@ -4,11 +4,11 @@ require('dotenv').config({path: '../.env'});
 var client = require('twilio')(process.env.accountSid, process.env.authToken);
 
 
-function startingMessage(cell){
+function startingMessage(cell, deadline, school_name){
   return client.messages.create({
-      body: `Hola es 'Little Bird' de Roots Elementary! Ya toca la revisión del
+      body: `Hola es 'Little Bird' de ${school_name}! Ya toca la revisión del
 IEP (Programa educativo individualizado) de su estudiante. Que dias
-durante la semana del 4 de Septiembre está usted disponible para
+durante la semana del ${deadline} está usted disponible para
 una junta de una hora? Por ejemplo, responda, 'Lunes, Martes y
 Miércoles.'`,
       to: cell,  // Text this number
@@ -16,7 +16,7 @@ Miércoles.'`,
   });
 }
 
-function timeOfDayMessage(cell){
+function timeOfDayMessage(cell, sped_info){
   return client.messages.create({
       body: `Genial! Que horario es mejor para usted? En la mañana o la
 tarde?`,
@@ -25,7 +25,7 @@ tarde?`,
   });
 }
 
-function preDoodleMessage(cell){
+function preDoodleMessage(cell, sped_info){
   return client.messages.create({
       body: `Que bueno! En seguida le mandaremos horarios
 potenciales.`,
@@ -37,7 +37,7 @@ potenciales.`,
 function confirmationInitiationMessage(cell){
   return client.messages.create({
     body: `Hola es 'Little Bird' nuevamente! Cual de estos tres horarios es
-mejor para la revisión del IEP de Jane?
+mejor para la revisión del IEP de tu nino?
     Por favor responda con uno de los siguiente numeros:
     1. Monday, September 4th at 9 AM
     2. Tuesday, September 5th at 8 AM
@@ -48,15 +48,15 @@ mejor para la revisión del IEP de Jane?
   });
 }
 
-function confirmationMessage(cell){
+function confirmationMessage(cell, sped_info){
   return client.messages.create({
-    body: `Gracias por confirmar! Ms. Moore está lista para la junta.`,
+    body: `Gracias por confirmar! ${sped_info.first_name} ${sped_info.last_name} está lista para la junta.`,
     to: cell,  // Text this numbery
     from: '+18042982615' // From a valid Twilio number
   });
 }
 
-function refindDate(cell){
+function refindDate(cell, sped_info){
   return client.messages.create({
     body: `Está bien. Yo buscaré otros horarios y le mandaré las opciones en seguida.`,
     to: cell,  // Text this numbery
@@ -64,10 +64,10 @@ function refindDate(cell){
   });
 }
 
-function errorMessage(cell){
+function errorMessage(cell, sped_info){
   return client.messages.create({
     body: `Disculpe, no entendí lo que me quizo decir. Por favor intente
-nuevamente o contacte a Mrs. Moore al 202-999-9999`,
+nuevamente o contacte a ${sped_info.first_name} ${sped_info.last_name} al ${sped_info.cell}`,
     to: cell,  // Text this numbery
     from: '+18042982615' // From a valid Twilio number
   });
