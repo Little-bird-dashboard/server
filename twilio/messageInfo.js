@@ -19,6 +19,7 @@ function prepareMessage(message,data){
   if(data.language_id==2){
     const translate = new Translate({
       projectId: projectId,
+      keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
     });
 
     const text = message.Body;
