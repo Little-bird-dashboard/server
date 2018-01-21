@@ -1,26 +1,26 @@
-var texts = require('../twilio/texts.js');
+var texts = require('../twilio/spanish-texts.js');
 var Queries = require('../database/schedulequeries');
 
 function getResponse(message, ids){
   const {stakeholder_id, student_id} = ids;
   let availability = [];
   let days = [];
-  if(message.toLowerCase().includes('monday') || message.toLowerCase().includes('tuesday') || message.toLowerCase().includes('wednesday') || message.toLowerCase().includes('thursday') || message.toLowerCase().includes('friday')) {
+  if(message.toLowerCase().includes('lunes') || message.toLowerCase().includes('martes') || message.toLowerCase().includes('miercoles') || message.toLowerCase().includes('jueves') || message.toLowerCase().includes('viernes')) {
     //continue on to update array of blackout dates
-    if (message.toLowerCase().includes('monday')) {
-      days.push('Monday')
+    if (message.toLowerCase().includes('lunes')) {
+      days.push('Monday');
     }
-    if (message.toLowerCase().includes('tuesday')) {
-      days.push('Tuesday')
+    if (message.toLowerCase().includes('martes')) {
+      days.push('Tuesday');
     }
-    if (message.toLowerCase().includes('wednesday')) {
-      days.push('Wednesday')
+    if (message.toLowerCase().includes('miercoles')) {
+      days.push('Wednesday');
     }
-    if (message.toLowerCase().includes('thursday')) {
-      days.push('Thursday')
+    if (message.toLowerCase().includes('jueves')) {
+      days.push('Thursday');
     }
-    if (message.toLowerCase().includes('friday')) {
-      days.push('Friday')
+    if (message.toLowerCase().includes('viernes')) {
+      days.push('Friday');
     }
     for (var i = 0; i < days.length; i++) {
       availability.push({
@@ -40,11 +40,11 @@ function getResponse(message, ids){
     });
     return {boiler_plate: 'timeOfDayMessage',
             text_method: texts.timeOfDayMessage};
-  }else if(message.toLowerCase().includes('morning') || message.toLowerCase().includes('afternoon') || message.toLowerCase().includes('either') || message.toLowerCase().includes('both')){
-    if (message.toLowerCase().includes('morning')) {
+  }else if(message.toLowerCase().includes('manana') || message.toLowerCase().includes('tarde') || message.toLowerCase().includes('ya sea') || message.toLowerCase().includes('ambos')){
+    if (message.toLowerCase().includes('manana')) {
       //schedule.morningOrAfternoon('morning');
     }
-    if (message.toLowerCase().includes('afternoon')) {
+    if (message.toLowerCase().includes('tarde')) {
     //  schedule.morningOrAfternoon('afternoon');
     }
     return {boiler_plate: 'preDoodleMessage',
