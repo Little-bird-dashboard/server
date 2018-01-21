@@ -8,7 +8,7 @@ var client = require('twilio')(process.env.accountSid, process.env.authToken);
 var handleResponse = require('../twilio/responseHandler.js');
 var texts = require('../twilio/texts.js');
 var spanish_texts = require('../twilio/spanish-texts.js');
-var translator = require('../twilio/textTranslations.js');
+var translator = require('../twilio/textTranslationsAdHoc.js');
 const storeMessageInfo = require('../twilio/messageInfo');
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:false}));
@@ -21,11 +21,11 @@ Router.post('/initiate/:id', (req,res) => {
   Queries.findGuardianCellById(req.params.id)
     .then(guardian_info=>{
       if(guardian_info.language_id==2){
-        spanish_texts.startingMessage(guardian_info.cell)
+        spanish_texts.startingMessage(guardian_info.cell, guardian_info.IEP_deadline, guardian_info.school_name)
           .then(message=> {
             let message_info= {
               communication_type_id: 4,
-              raw_body: translator.translator.startingMessage.en,
+              raw_body: translator.getTranslation(guardian_info.IEP_deadline, guardian_info.school_name,'en','startingMessage'),
               timestamp: Date.now(),
               student_id: req.params.id,
               stakeholder_id: 7,
@@ -40,7 +40,7 @@ Router.post('/initiate/:id', (req,res) => {
                 let translation = {
                   communication_id: communication[0].id,
                   language_id: 2,
-                  foreign_language_body: translator.translator.startingMessage.es
+                  foreign_language_body: translator.getTranslation(guardian_info.IEP_deadline, guardian_info.school_name,'es','startingMessage')
                 };
                 Queries.insertOneCommunicationTranslation(translation)
                   .then(res.send('message initiated successfully'));
@@ -48,7 +48,7 @@ Router.post('/initiate/:id', (req,res) => {
           });
       }
       else{
-        texts.startingMessage(guardian_info.cell)
+        texts.startingMessage(guardian_info.cell, guardian_info.IEP_deadline, guardian_info.school_name)
           .then(message=>{
             let message_info= {
               communication_type_id: 4,
@@ -129,7 +129,7 @@ Router.post('/confirm/:id', (req,res) => {
           .then(message=> {
             let message_info= {
               communication_type_id: 4,
-              raw_body: translator.translator.confirmationInitiationMessage.en,
+              raw_body: translator.getTranslation('hold', 'hold','en','confirmationInitiationMessage'),
               timestamp: Date.now(),
               student_id: req.params.id,
               stakeholder_id: 7,
@@ -144,7 +144,7 @@ Router.post('/confirm/:id', (req,res) => {
                 let translation = {
                   communication_id: communication[0].id,
                   language_id: 2,
-                  foreign_language_body: translator.translator.confirmationInitiationMessage.es
+                  foreign_language_body: translator.getTranslation('hold', 'hold','en','confirmationInitiationMessage')
                 };
                 Queries.insertOneCommunicationTranslation(translation)
                   .then(res.send('message initiated successfully'));

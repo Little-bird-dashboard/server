@@ -83,33 +83,36 @@ function storeMessageInfo_outgoing(message) {
 }
 
 function prepareOutgoingMessage(message_object,data){
-  let message = message_object.message;
-  let message_body = '';
-  let language = 1;
-  if(data.language_id==2){
-    let boiler = message_object.boiler;
-    message_body = translator.translator[boiler].en;
-    language = 2;
-  }
-  else{
-    message_body = message.body;
-  }
-  let message_info= {
-    communication_type_id: 4,
-    raw_body: message_body,
-    timestamp: Date.now(),
-    student_id: data.student_id,
-    stakeholder_id: 7,
-    MessageSid: message.sid,
-    AccountSid: message.accountSid,
-    message_status: message.status,
-    communication_recipient_contact: message.to,
-    communication_sender_contact: message.from,
-    language_id: language
-  };
-  return {outgoing_formatted: message_info,
-          raw_response: message.body,
-          language_id: language};
+  return Queries.getSpedInfoByStudentID(data.student_id)
+    .then(sped_info => {
+      let message = message_object.message;
+      let message_body = '';
+      let language = 1;
+      if(data.language_id==2){
+        let boiler = message_object.boiler;
+        message_body = translator.getTranslation(sped_info,'en',boiler);
+        language = 2;
+      }
+      else{
+        message_body = message.body;
+      }
+      let message_info= {
+        communication_type_id: 4,
+        raw_body: message_body,
+        timestamp: Date.now(),
+        student_id: data.student_id,
+        stakeholder_id: 7,
+        MessageSid: message.sid,
+        AccountSid: message.accountSid,
+        message_status: message.status,
+        communication_recipient_contact: message.to,
+        communication_sender_contact: message.from,
+        language_id: language
+      };
+      return {outgoing_formatted: message_info,
+              raw_response: message.body,
+              language_id: language};
+    });
 }
 
  /*OVERLAPPING FUNCTIONS*/
@@ -120,16 +123,19 @@ function prepareOutgoingMessage(message_object,data){
  }
 
 function callHandler(ids, incoming_message){
-  if(ids.language_id !== 1){
-    let logic_response = handleSpanishResponse.getResponse(incoming_message.Body, ids);
-      return logic_response.text_method(incoming_message.From)
-        .then(message => {
-          return {message: message,
-                  boiler: logic_response.boiler_plate};
-        });
-  }else{
-    return handleResponse.getResponse(incoming_message.Body, ids)(incoming_message.From);
-  }
+  return Queries.getSpedInfoByStudentID(ids.student_id)
+    .then((sped_info) => {
+      if(ids.language_id !== 1){
+        let logic_response = handleSpanishResponse.getResponse(incoming_message.Body, ids);
+          return logic_response.text_method(incoming_message.From, sped_info)
+            .then(message => {
+              return {message: message,
+                      boiler: logic_response.boiler_plate};
+            });
+      }else{
+        return handleResponse.getResponse(incoming_message.Body, ids)(incoming_message.From, sped_info);
+      }
+  });
 }
   module.exports={
    storeMessageInfo_incoming,

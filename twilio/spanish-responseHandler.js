@@ -1,5 +1,6 @@
 var texts = require('../twilio/spanish-texts.js');
 var Queries = require('../database/schedulequeries');
+var smsQueries = require('../database/smsqueries');
 
 function getResponse(message, ids){
   const {stakeholder_id, student_id} = ids;
