@@ -3,13 +3,6 @@ const Router = Express.Router();
 const Queries = require('../database/queries');
 const smsQueries = require('../database/smsqueries');
 
-Router.get('/', (req, res) => {
-  Queries.getAllStudents()
-    .then(studentList => {
-      res.send(studentList);
-    });
-});
-
 Router.get('/:id', (req, res, next) => {
   Queries.getOneStudentByID(req.params.id)
     .then(student => {

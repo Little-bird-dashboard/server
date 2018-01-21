@@ -11,9 +11,9 @@ const app = express();
 
 const students = require('./routes/students');
 const sms = require('./routes/sms');
-const auth = require('./auth/routes')
+const auth = require('./auth/routes');
 const schedule = require('./routes/schedule');
-
+const studentList = require('./routes/studentList');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -27,6 +27,7 @@ app.use('/students', students);
 app.use('/sms', sms);
 app.use('/auth', auth);
 app.use('/schedule', schedule);
+app.use('/studentList', studentList);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
