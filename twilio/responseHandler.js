@@ -38,8 +38,7 @@ function getResponse(message, ids){
       Queries.insertOneDayPeriod(period)
         .then(message=>console.log(message));
     });
-    return {boiler_plate: 'timeOfDayMessage',
-            text_method: texts.timeOfDayMessage};
+    return texts.timeOfDayMessage;
   }else if(message.toLowerCase().includes('morning') || message.toLowerCase().includes('afternoon') || message.toLowerCase().includes('either') || message.toLowerCase().includes('both')){
     if (message.toLowerCase().includes('morning')) {
       //schedule.morningOrAfternoon('morning');
@@ -47,20 +46,16 @@ function getResponse(message, ids){
     if (message.toLowerCase().includes('afternoon')) {
     //  schedule.morningOrAfternoon('afternoon');
     }
-    return {boiler_plate: 'preDoodleMessage',
-            text_method: texts.preDoodleMessage};
+    return texts.preDoodleMessage;
   }else if(message.includes('1') || message.includes('2') || message.includes('3') || message.includes('4')){
     if(message.includes('1') || message.includes('2') || message.includes('3')){
       //insert confirmed date in table
-      return {boiler_plate: 'confirmationMessage',
-              text_method: texts.confirmationMessage};
+      return texts.confirmationMessage;
     }else if (message.includes('4')){
-      return {boiler_plate: 'refindDate',
-              text_method: texts.refindDate};
+      return texts.refindDate;
     }
   }else{
-    return {boiler_plate: 'errorMessage',
-            text_method: texts.errorMessage};
+    return texts.errorMessage;
   }
 }
 

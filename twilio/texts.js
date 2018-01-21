@@ -43,7 +43,7 @@ function confirmationInitiationMessage(cell){
 
 function confirmationMessage(cell){
   return client.messages.create({
-    body: `Thanks for confirming! Ms. Moore is looking forward to seeing you.`,
+    body: `Thanks for confirming! Mr. Wybrant is looking forward to seeing you.`,
     to: cell,  // Text this numbery
     from: '+18042982615' // From a valid Twilio number
   });
@@ -59,7 +59,7 @@ function refindDate(cell){
 
 function errorMessage(cell){
   return client.messages.create({
-    body: `I did not understand that. Please retry or contact Mrs. Moore at 202-999-9999`,
+    body: `I did not understand that. Please retry or contact Mr. Wybrant at 202-999-9999`,
     to: cell,  // Text this numbery
     from: '+18042982615' // From a valid Twilio number
   });
