@@ -7,6 +7,16 @@ module.exports = {
     .leftJoin('communication as comm', 'comm.student_id', 'student.id' )
     .groupBy('student.id');
   },
+  getAllStudentsAdmin: () => {
+    return knex('student as s')
+    .select('s.*', 'l.name', 'st.first_name', 'st.last_name', 'school.name', 'gt.name')
+    .innerJoin('school', 'school.id', 's.school_id')
+    .leftJoin('language as l', 'l.id', 's.language_id')
+    .innerJoin('student_stakeholder as ss', 'ss.student_id', 's.id')
+    .innerJoin('stakeholder st', 'st.id', 'ss.stakeholder_id')
+    .leftJoin('grade_type as gt', 'gt.id', 's.grade_type_id')
+    .where('st.stakeholder_type_id', 1);
+  },
   getAllStudentsByTeacher: (id) => {
     return knex('student_stakeholder as ss')
     .select(knex.raw('s.*, max(timestamp) as last_communication'))

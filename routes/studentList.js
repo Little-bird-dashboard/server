@@ -3,7 +3,7 @@ const Router = Express.Router();
 const Queries = require('../database/queries');
 
 Router.get('/', (req, res) => {
-  Queries.getAllStudents()
+  Queries.getAllStudentsAdmin()
     .then(studentList => {
       res.send(studentList);
     });
