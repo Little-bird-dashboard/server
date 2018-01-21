@@ -14,5 +14,13 @@ module.exports = {
   },
   findStakeholderTypeById: (id) => {
     return knex('stakeholder_type').select('type').where('id', id).first();
+  },
+  findCoordiantorIdByEmail: (email) => {
+    return knex('stakeholder').select('id').where('email', email).first();
+  },
+  updatePassword: (id, details) => {
+    console.log('query', id, details);
+    return knex('login').where('id', id).update(details).returning('*')
+      .then(res => res[0])
   }
 }
