@@ -39,7 +39,7 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // render the error page
-  res.status(err.status || res.statusCode || 500);
+  res.set(err.status || res.statusCode || 500);
   res.json({message: err.message, error:req.app.get('env') === 'development' ? err : {} });
 });
 
