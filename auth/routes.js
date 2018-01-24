@@ -51,24 +51,29 @@ router.post('/login', (req, res, next) => {
                   token: token,
                   school: coordinator.school,
                   type: coordinator.stakeholder_type,
-                  id: coordinator.stakeholder_id
+                  id: coordinator.stakeholder_id,
+                  first_name: coordinator.first_name,
+                  last_name: coordinator.last_name
                 }
                 res.json(stakeholder);
               } else {
-                res.setStatus(403)
-                next(new Error('Incorrect password'));
-              }
+                res.status(403).json({
+                  error: {
+                    message: "Incorrect password"
+                  }
+              })
+            }
             })
           //they were foumnd and login
         } else {
           //not found should signup
           res.setStatus(400)
-          next(new Error('Email not found. Please create an account'));
+          res.send({Message: 'Email not found. Please contact your administrator'});
         }
       });
   } else {
     res.setStatus(403)
-    next(new Error('Invalid User Credentials'));
+    res.send({Message: 'Invalid User Credentials'});
   }
 });
 
