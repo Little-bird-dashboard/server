@@ -2,13 +2,15 @@ require('dotenv').config({path: '../.env'});
 //var client = require('twilio')('ACc71efe287963381a331670fd48bbbf3d', 'dcefdcfe799de453bcaf65bbc4641adb');
 
 var client = require('twilio')(process.env.accountSid, process.env.authToken);
+var moment = require('moment');
 
 
 function startingMessage(cell, deadline, school_name){
+  const date = moment(deadline, 'ddd MMM DD YYYY hh:mm:ss [GMT]ZZ').format('MM-DD-YYYY');
   return client.messages.create({
       body: `Hola es 'Little Bird' de ${school_name}! Ya toca la revisión del
 IEP (Programa educativo individualizado) de su estudiante. Que dias
-durante la semana del ${deadline} está usted disponible para
+durante la semana del ${date} está usted disponible para
 una junta de una hora? Por ejemplo, responda, 'Lunes, Martes y
 Miércoles.'`,
       to: cell,  // Text this number

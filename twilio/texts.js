@@ -1,12 +1,15 @@
 require('dotenv').config({path: '../.env'});
 //var client = require('twilio')('ACc71efe287963381a331670fd48bbbf3d', 'dcefdcfe799de453bcaf65bbc4641adb');
+var moment = require('moment');
+
 
 var client = require('twilio')(process.env.accountSid, process.env.authToken);
 
 
 function startingMessage(cell, deadline, school_name){
+  const date = moment(deadline, 'ddd MMM DD YYYY hh:mm:ss [GMT]ZZ').format('MM-DD-YYYY');
   return client.messages.create({
-      body: `Hey it's Little Bird from ${school_name}! Your child's IEP review is coming up. What days during the week of ${deadline} would you be available to meet for an hour? For example, type 'Monday, Tuesday and Wednesday'`,
+      body: `Hey it's Little Bird from ${school_name}! Your child's IEP review is coming up. What days during the week of ${date} would you be available to meet for an hour? For example, type 'Monday, Tuesday and Wednesday'`,
       to: cell,  // Text this number
       from: '+18042982615' // From a valid Twilio number
   });
