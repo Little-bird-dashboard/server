@@ -28,9 +28,11 @@ module.exports = {
   },
   getOneStudentByID: (id) => {
     return knex('student AS s')
-    .select('s.*', 'gt.name AS grade_name')
+    .select(knex.raw('s.*, gt.name AS grade_name, min(timestamp) as initial_communication'))
     .leftJoin('grade_type AS gt', 'gt.id', 'grade_type_id')
-    .where('s.id', id);
+    .leftJoin('communication as comm', 'comm.student_id', 's.id' )
+    .where('s.id', id)
+    .groupBy('s.id', 'gt.name')
   },
   getStakeholdersByStudentID: (id) => {
     return knex('student_stakeholder AS ss')
