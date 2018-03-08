@@ -30,10 +30,9 @@ module.exports = {
     return knex('student AS s')
     .select(knex.raw('s.*, gt.name AS grade_name, min(timestamp) as initial_communication'))
     .leftJoin('grade_type AS gt', 'gt.id', 'grade_type_id')
-    .rightJoin('communication as comm', 'comm.student_id', 's.id' )
+    .leftJoin('communication as comm', 'comm.student_id', 's.id' )
     .where('s.id', id)
-    .groupBy('s.id')
-    //giving me Unhandled rejection error: column "gt.name" must appear in the GROUP BY clause or be used in an aggregate function
+    .groupBy('s.id', 'gt.name')
   },
   getStakeholdersByStudentID: (id) => {
     return knex('student_stakeholder AS ss')
