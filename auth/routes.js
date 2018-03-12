@@ -28,9 +28,8 @@ router.put('/register', (req, res, next) => {
               })
           })
       })
-
   } else {
-    res.setStatus(403)
+    res.statusCode = 403;
     next(new Error('Invalid User'));
   }
 })
@@ -57,23 +56,28 @@ router.post('/login', (req, res, next) => {
                 }
                 res.json(stakeholder);
               } else {
-                res.status(403).json({
-                  error: {
-                    message: "Incorrect password"
-                  }
-              })
-            }
+                res.statusCode = 403;
+                next(new Error('Invalid User Credentials'));
+              }
             })
+            .catch(err => {
+              res.statusCode = 400;
+              next(new Error (err));
+            });
           //they were foumnd and login
         } else {
           //not found should signup
-          res.setStatus(400)
-          res.send({Message: 'Email not found. Please contact your administrator'});
+          res.statusCode = 403;
+          throw new Error('Invalid User Credentials');
         }
+      })
+      .catch(err => {
+        res.statusCode = 400;
+        next(new Error (err));
       });
   } else {
-    res.setStatus(403)
-    res.send({Message: 'Invalid User Credentials'});
+    res.statusCod = 403;
+    next(new Error ('Invalid User Credentials'));
   }
 });
 
